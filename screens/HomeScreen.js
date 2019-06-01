@@ -11,13 +11,15 @@ import {
   Button,
 } from 'react-native';
 
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: '経路探索',
+    title: 'ドコモサイクル経路探索',
+    headerLeft: <MaterialIcons name="directions-bike" size={32} color="green" />,
+    headerRight: <AntDesign name="setting" size={32} color="green" />,
   };
 
   constructor(props){
@@ -65,11 +67,6 @@ export default class HomeScreen extends React.Component {
                 navigate('SearchResult');
               }}
             />
-            <AntDesign  /** アイコンを置くサンプル **/
-              name="setting"
-              size={32}
-              color="green"
-              />
           </View>
         </ScrollView>
       </View>
