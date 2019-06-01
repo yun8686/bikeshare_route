@@ -8,12 +8,9 @@ import {
   View,
 } from 'react-native';
 
-/**
- * 動作確認に使ってる
-**/
-export default class LinksScreen extends React.Component {
+export default class SearchResultScreen extends React.Component {
   static navigationOptions = {
-    title: "テストページ",
+    title: "検索結果",
   };
   constructor(props){
     super(props);
@@ -28,7 +25,8 @@ export default class LinksScreen extends React.Component {
       results.push(
         <View
           style={styles.resultRow}
-          key={i}>
+          key={i}
+        >
           <Text>aaaaaaaa</Text>
         </View>
       );
