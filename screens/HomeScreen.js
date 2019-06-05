@@ -17,9 +17,22 @@ import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'ドコモサイクル経路探索',
-    headerLeft: <MaterialIcons name="directions-bike" size={32} color="green" />,
-    headerRight: <AntDesign name="setting" size={32} color="green" />,
+    headerTitle: 
+      <View style={{ width:'100%', alignItems: "center"}}>
+        <Text style={{ color:'#fff',fontWeight: 'bold', fontSize: 16}} >ドコモサイクル経路探索</Text>
+      </View>,
+      headerStyle: {
+        backgroundColor: '#FF4343',
+        barHeight: 60,
+      },
+    headerLeft:
+      <View style={{ padding:8 }}>
+        <MaterialIcons name="directions-bike" size={32} color="#fff" />
+      </View>,
+    headerRight:
+      <View style={{ padding:8 }}>
+        <AntDesign name="setting" size={32} color="#fff" />
+      </View>,
   };
 
   constructor(props){
