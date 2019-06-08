@@ -6,7 +6,14 @@ import {
   TextInput,
   Text,
   View,
+  ToastAndroid,
 } from 'react-native';
+import {
+  MapView,
+} from 'expo';
+
+import {getCurrentPosition} from '../tools/geolocation';
+import locationData from '../tools/locationData';
 
 /**
  * 動作確認に使ってる
@@ -15,33 +22,81 @@ export default class LinksScreen extends React.Component {
   static navigationOptions = {
     title: "テストページ",
   };
+
   constructor(props){
     super(props);
     this.state = {
       keyword: "",
+      mapMargin: 1,
+      region: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.2,
+      }
     };
+
+    this.stationPoints = locationData.getAll().map((v,i)=>{
+      return(
+        <MapView.Marker
+          key={i}
+          coordinate={{
+            latitude: v.latitude-0,
+            longitude: v.longitude-0
+          }}
+          title={v.name}
+          description={"desss"}
+        />)
+    });
+
   }
 
-  render() {
-    const results = [];
-    for(var i=0;i<20;i++){
-      results.push(
-        <View
-          style={styles.resultRow}
-          key={i}>
-          <Text>aaaaaaaa</Text>
-        </View>
-      );
+  async componentWillMount() {
+    await this.updateCurrentPosition();
+//    this.interval = setInterval(()=>this.updateCurrentPosition(), 5000);
+  }
+  async componentWillUnmount(){
+//    clearInterval(this.interval);
+  }
+
+  async updateCurrentPosition(){
+    try {
+      const position = await getCurrentPosition(5000);
+      const { latitude, longitude } = position.coords;
+      const latitudeDelta = 0.2, longitudeDelta = 0.2;
+      this.setState({
+        region: {
+          latitude, longitude,
+          latitudeDelta, longitudeDelta
+        },
+      });
+    } catch(e) {
+      alert(e.message)
     }
+  }
+
+  onRegionChangeComplete(region) {
+    this.setState({ region });
+  }
+
+
+  render() {
     return (
       <View style={styles.container}>
-        <View style={styles.resultHeader}>
-          <Text>aaaaaaaa</Text>
-          <Text>↓</Text>
-          <Text>aaaaaaaa</Text>
-        </View>
-        <ScrollView style={styles.resultList}>
-          {results}
+        <Text>{this.state.region.latitude} , {this.state.region.longitude}</Text>
+        <MapView
+          style={{flex: 5, marginBottom: this.state.mapMargin}}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+          showsCompass = {true}
+          showScale = {true}
+          onRegionChangeComplete={region => this.onRegionChangeComplete(region)}
+          onMapReady={()=>this.setState({mapMargin:0})}
+          region={this.state.region}
+        >
+          {this.stationPoints}
+        </MapView>
+        <ScrollView horizontal={true} style={styles.locationList}>
         </ScrollView>
       </View>
     );
@@ -53,18 +108,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  resultHeader: {
-
+  locationMap:{
+    flex: 5,
   },
-  resultList: {
+  locationList:{
     flex: 1,
-    paddingTop: 10,
-    backgroundColor: '#DDD',
-  },
-  resultRow: {
-    height: 100,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: 'green',
   }
 });
