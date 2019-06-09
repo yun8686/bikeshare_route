@@ -3,7 +3,6 @@ import {
   ScrollView,
   View,
   StyleSheet,
-  Button,
   TextInput,
   Text,
   TouchableOpacity,
@@ -62,20 +61,25 @@ export default class PlaceSearchScreen extends React.Component {
             <Text style={styles.menuButtonText}>地図</Text>
           </TouchableOpacity>
         </View>
-        <TextInput
-          style={styles.textarea}
-          onChangeText={(keyword) => this.setState({keyword})}
-          title="キーワード"
-          value={this.state.keyword}
-        />
-        <Button
-          style={{width: 100, height: 40, borderColor: 'gray', borderWidth: 1}}
-          title="検索"
-          onPress={(text)=>{}}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(keyword) => this.setState({keyword})}
+            title="キーワード"
+            value={this.state.keyword}
+          />
+          <TouchableOpacity
+            style={styles.inputBotton}
+            title="検索"
+            onPress={(text)=>{}}
+          >
+            <Text style={styles.inputBottonText}>検索</Text>
+          </TouchableOpacity>
+        </View>
 
-        <ScrollView style={styles.container}>
-          <Text style={{fontSize:30}}>{this.props.navigation.state.params.mode}</Text>
+        <Text style={styles.resultTitle}>検索結果</Text>
+        <ScrollView style={styles.result}>
+          <Text style={styles.resultText}>{this.props.navigation.state.params.mode}</Text>
         </ScrollView>
       </ScrollView>
     );
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 16,
     marginLeft: 32,
     marginRight: 32,
   },
@@ -103,6 +107,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#707070',
     borderRightColor: '#707070',
   },
+  menuButton__active: {
+    backgroundColor: '#FF4343'
+  },
   menuButton__first: {
     borderLeftWidth: 1,
     borderLeftColor: '#707070',
@@ -114,5 +121,60 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     height: 38,
     lineHeight: 38,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    marginTop: 24,
+  },
+  input: {
+    flex: 1,
+    backgroundColor: "#FFF",
+    borderLeftWidth: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftColor: '#707070',
+    borderTopColor: '#707070',
+    borderBottomColor: '#707070',
+    height: 48,
+    marginLeft: 8,
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
+    paddingLeft: 8,
+  },
+  inputBotton: {
+    width: 80,
+    height: 48,
+    backgroundColor: "#FF4343",
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
+    marginRight: 8,
+  },
+  inputBottonText: {
+    color: '#FFF',
+    fontSize: 16,
+    lineHeight: 48,
+    textAlign: 'center',
+  },
+  // 検索結果
+  resultTitle: {
+    width: '100%',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: '#707070',
+    borderBottomColor: '#707070',
+    fontSize: 20,
+    paddingLeft: 12,
+    height: 48,
+    lineHeight: 48,
+    backgroundColor: '#E3E3E3',
+    marginTop: 30,
+  },
+  resultText: {
+    height: 48,
+    lineHeight: 48,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E3E3E3',
+    paddingLeft: 12,
+    fontSize: 20,
   }
 });
