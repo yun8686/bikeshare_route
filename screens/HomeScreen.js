@@ -50,35 +50,35 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputText}>出発地</Text>
-            <TextInput
+            <Text style={styles.inputText}>出発</Text>
+            <Text
               name="出発"
               style={styles.input}
               onChangeText={(text) => this.setState({origin: "検索sann"})}
               value={this.state.origin}
-              onFocus={(text) =>{
+              onPress={(text) =>{
                 navigate('PlaceSearch', {
                   "mode": "origin",
                 })
               }}
-            />
+            ></Text>
           </View>
           <View style={styles.iconContainer}>
             <FontAwesome name="arrows-v" size={32} color="#FF4343" />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputText}>目的地</Text>
-            <TextInput
+            <Text style={styles.inputText}>到着</Text>
+            <Text
               name="到着"
               style={styles.input}
               onChangeText={(text) => this.setState({text})}
               value={this.state.destination}
-              onFocus={(text) =>{
+              onPress={(text) =>{
                 navigate('PlaceSearch',{
                   "mode": "destination",
                 })
               }}
-            />
+            ></Text>
           </View>
           <View>
             <TouchableOpacity
