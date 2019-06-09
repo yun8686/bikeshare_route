@@ -8,7 +8,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Button,
 } from 'react-native';
 
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
@@ -82,7 +81,6 @@ export default class HomeScreen extends React.Component {
             />
           </View>
           <View>
-            
             <TouchableOpacity
               name="検索"
               title="検索"

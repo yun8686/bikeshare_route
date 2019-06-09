@@ -1,10 +1,12 @@
 import React from 'react';
 import {
   ScrollView,
+  View,
   StyleSheet,
   Button,
   TextInput,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 
 /**
@@ -13,6 +15,16 @@ import {
 export default class PlaceSearchScreen extends React.Component {
   static navigationOptions = {
     title: '駐輪場検索',
+    headerStyle: {
+      backgroundColor: '#FF4343',
+      barHeight: 60,
+    },
+    headerTitleStyle: {
+      color:'#fff',
+      fontWeight: 'bold',
+      fontSize: 16,
+    },
+    headerTintColor: '#fff',
   };
   constructor(props){
     super(props);
@@ -24,21 +36,32 @@ export default class PlaceSearchScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Button
-          style={{width: 100, height: 40, borderColor: 'gray', borderWidth: 1}}
-          title="名前"
-          onPress={(text)=>{this.setState({text: "検索"})}}
-        />
-        <Button
-          style={{width: 100, height: 40, borderColor: 'gray', borderWidth: 1}}
-          title="登録地"
-          onPress={(text)=>{this.setState({text: "検索"})}}
-        />
-        <Button
-          style={{width: 100, height: 40, borderColor: 'gray', borderWidth: 1}}
-          title="地図"
-          onPress={(text)=>{this.setState({text: "検索"})}}
-        />
+        <View style={styles.menu}>
+          <TouchableOpacity
+            name="名前"
+            title="名前"
+            style={[styles.menuButton, styles.menuButton__first]}
+            onPress={(text)=>{this.setState({text: "名前"})}}
+            underlayColor='#fff'>
+            <Text style={styles.menuButtonText}>名前</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            name="登録地"
+            title="登録地"
+            style={styles.menuButton}
+            onPress={(text)=>{this.setState({text: "登録地"})}}
+            underlayColor='#fff'>
+            <Text style={styles.menuButtonText}>登録地</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            name="地図"
+            title="地図"
+            style={styles.menuButton}
+            onPress={(text)=>{this.setState({text: "地図"})}}
+            underlayColor='#fff'>
+            <Text style={styles.menuButtonText}>地図</Text>
+          </TouchableOpacity>
+        </View>
         <TextInput
           style={styles.textarea}
           onChangeText={(keyword) => this.setState({keyword})}
@@ -65,4 +88,31 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
   },
+  menu: {
+    flexDirection: 'row',
+    marginTop: 20,
+    marginLeft: 32,
+    marginRight: 32,
+  },
+  menuButton: {
+    flex: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    borderTopColor: '#707070',
+    borderBottomColor: '#707070',
+    borderRightColor: '#707070',
+  },
+  menuButton__first: {
+    borderLeftWidth: 1,
+    borderLeftColor: '#707070',
+  },
+  menuButtonText: {
+    color: '#707070',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    height: 38,
+    lineHeight: 38,
+  }
 });
