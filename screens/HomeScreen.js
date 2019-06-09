@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { MonoText } from '../components/StyledText';
 
@@ -48,11 +49,12 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
+        <ScrollView>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>出発地</Text>
             <TextInput
-              name="出発地"
-              style={styles.textarea}
+              name="出発"
+              style={styles.input}
               onChangeText={(text) => this.setState({origin: "検索sann"})}
               value={this.state.origin}
               onFocus={(text) =>{
@@ -61,9 +63,15 @@ export default class HomeScreen extends React.Component {
                 })
               }}
             />
+          </View>
+          <View style={styles.iconContainer}>
+            <FontAwesome name="arrows-v" size={32} color="#FF4343" />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputText}>目的地</Text>
             <TextInput
-              name="目的地"
-              style={styles.textarea}
+              name="到着"
+              style={styles.input}
               onChangeText={(text) => this.setState({text})}
               value={this.state.destination}
               onFocus={(text) =>{
@@ -72,14 +80,19 @@ export default class HomeScreen extends React.Component {
                 })
               }}
             />
-            <Button
+          </View>
+          <View>
+            
+            <TouchableOpacity
               name="検索"
-              style={{width: 100, height: 40, borderColor: 'gray', borderWidth: 1}}
               title="検索"
+              style={styles.searchButton}
               onPress={(text)=>{
                 navigate('SearchResult');
               }}
-            />
+              underlayColor='#fff'>
+              <Text style={styles.searchButtonText}>検索</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
@@ -92,18 +105,52 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  contentContainer: {
-    paddingTop: 30,
+  inputContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+  inputText: {
+    fontSize: 20,
+    color: '#fff',
+    backgroundColor: '#FF4343',
+    width: 82,
+    height: 48,
+    marginLeft: 8,
+    textAlign: 'center',
+    lineHeight: 48,
   },
-  textarea: {
+  input: {
     flex: 1,
-    backgroundColor: "gray",
-    width: 100,
-    marginTop: 10,
+    backgroundColor: "#FFF",
+    borderWidth: 1,
+    borderLeftColor: '#FF4343',
+    borderTopColor: '#707070',
+    borderBottomColor: '#707070',
+    borderRightColor: '#707070',
+    height: 48,
+    marginRight: 8,
+  },
+  iconContainer: {
+    marginTop: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  searchButton: {
+    marginTop: 40,
+    backgroundColor: "#FFF",
+
+  },
+  searchButtonText: {
+    color: '#FF4343',
+    fontSize: 20,
+    fontWeight: 'bold',
+    borderColor: '#FF4343',
+    borderWidth: 2,
+    marginLeft: 24,
+    marginRight: 14,
+    textAlign: 'center',
+    height: 58,
+    lineHeight: 58,
+    borderRadius: 6,
   }
 });
