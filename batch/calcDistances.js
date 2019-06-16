@@ -29,13 +29,11 @@ function doDirections(a,b){
 
       var result = {json:{routes:[{legs:0}]}};
 //      var result = await doDirections(base, target);
-      results.push(
-        {
-          start_id: base.id,
-          end_id: target.id,
-          legs:result.json.routes[0].legs
-        }
-      );
+      results.push({
+        start_id: base.id,
+        end_id: target.id,
+        legs:result.json.routes[0].legs
+      });
       nodeCount++;
     }
     console.log("processing", cnt + "/" + Math.pow(locationdata.length,2));

@@ -7,6 +7,8 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import {searchPlace} from '../../tools/locationData';
+
 
 /**
  * 駐輪場を名前から検索する画面
@@ -29,7 +31,16 @@ export default class PlaceSearchScreen extends React.Component {
     super(props);
     this.state = {
       keyword: "",
+      searchResults: [],
     };
+  }
+
+
+  async runSearch(text){
+    const results = await searchPlace({text});
+    this.setState({
+      searchResults: results
+    });
   }
 
   render() {
@@ -71,7 +82,7 @@ export default class PlaceSearchScreen extends React.Component {
           <TouchableOpacity
             style={styles.inputBotton}
             title="検索"
-            onPress={(text)=>{}}
+            onPress={(text)=>{this.runSearch(this.state.keyword)}}
           >
             <Text style={styles.inputBottonText}>検索</Text>
           </TouchableOpacity>
@@ -79,7 +90,14 @@ export default class PlaceSearchScreen extends React.Component {
 
         <Text style={styles.resultTitle}>検索結果</Text>
         <ScrollView style={styles.result}>
-          <Text style={styles.resultText}>{this.props.navigation.state.params.mode}</Text>
+          {this.state.searchResults.map((v, i)=>{
+            return <Text
+              key={i}
+              style={styles.resultText}
+              >
+                {v.text}
+              </Text>
+          })}
         </ScrollView>
       </ScrollView>
     );
