@@ -9,30 +9,27 @@ import {
 } from 'react-native';
 import {searchPlace} from '../../tools/locationData';
 
+import SubHeader from '../../components/header/SubHeader';
+
 
 /**
  * 駐輪場を名前から検索する画面
  */
 export default class PlaceSearchScreen extends React.Component {
-  static navigationOptions = {
-    title: '駐輪場検索',
-    headerStyle: {
-      backgroundColor: '#FF4343',
-      barHeight: 60,
-    },
-    headerTitleStyle: {
-      color:'#fff',
-      fontWeight: 'bold',
-      fontSize: 16,
-    },
-    headerTintColor: '#fff',
-  };
+  static navigationOptions = SubHeader('駐輪場検索');
   constructor(props){
     super(props);
     this.state = {
       keyword: "",
       searchResults: [],
+      pressStatus: false,
     };
+  }
+  _onHideUnderlay() {
+    this.setState({ pressStatus: false });
+  }
+  _onShowUnderlay() {
+      this.setState({ pressStatus: true });
   }
 
 
@@ -41,6 +38,7 @@ export default class PlaceSearchScreen extends React.Component {
     this.setState({
       searchResults: results
     });
+    
   }
 
   render() {
@@ -48,20 +46,23 @@ export default class PlaceSearchScreen extends React.Component {
       <ScrollView style={styles.container}>
         <View style={styles.menu}>
           <TouchableOpacity
-            name="名前"
-            title="名前"
-            style={[styles.menuButton, styles.menuButton__first]}
-            onPress={(text)=>{this.setState({text: "名前"})}}
-            underlayColor='#fff'>
-            <Text style={styles.menuButtonText}>名前</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             name="登録地"
             title="登録地"
-            style={styles.menuButton}
+            style={
+              this.state.pressStatus
+                  ? [styles.menuButton, styles.menuButton__first, styles.menuButton__active]
+                  : [styles.menuButton, styles.menuButton__first]
+            }
             onPress={(text)=>{this.setState({text: "登録地"})}}
+            onHideUnderlay={this._onHideUnderlay.bind(this)}
+            onShowUnderlay={this._onShowUnderlay.bind(this)}
             underlayColor='#fff'>
-            <Text style={styles.menuButtonText}>登録地</Text>
+            <Text 
+            style={
+              this.state.pressStatus
+                  ? [styles.menuButtonText, styles.menuButtonText__active]
+                  : [styles.menuButtonText]
+            }>登録地</Text>
           </TouchableOpacity>
           <TouchableOpacity
             name="地図"
@@ -72,6 +73,8 @@ export default class PlaceSearchScreen extends React.Component {
             <Text style={styles.menuButtonText}>地図</Text>
           </TouchableOpacity>
         </View>
+
+
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -110,6 +113,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
   },
+  // メニュー箇所
   menu: {
     flexDirection: 'row',
     marginTop: 16,
@@ -124,13 +128,19 @@ const styles = StyleSheet.create({
     borderTopColor: '#707070',
     borderBottomColor: '#707070',
     borderRightColor: '#707070',
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
   },
   menuButton__active: {
-    backgroundColor: '#FF4343'
+    backgroundColor: '#FF4343',
   },
   menuButton__first: {
     borderLeftWidth: 1,
     borderLeftColor: '#707070',
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
   },
   menuButtonText: {
     color: '#707070',
@@ -139,6 +149,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     height: 38,
     lineHeight: 38,
+  },
+  menuButtonText__active: {
+    color: '#FFF',
   },
   inputContainer: {
     flexDirection: 'row',
